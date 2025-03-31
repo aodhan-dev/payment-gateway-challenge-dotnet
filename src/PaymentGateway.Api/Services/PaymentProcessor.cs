@@ -3,7 +3,7 @@ using PaymentGateway.Api.Models.Responses;
 
 namespace PaymentGateway.Api.Services;
 
-public class PaymentProcessingService(IAcquiringBankApi acquiringBankApi) : IPaymentProcessingService
+public class PaymentProcessor(IAcquiringBankApi acquiringBankApi) : IPaymentProcessor
 {
     private readonly IAcquiringBankApi _acquiringBankApi = acquiringBankApi;
 

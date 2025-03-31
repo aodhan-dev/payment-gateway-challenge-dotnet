@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 
 // Register interfaces and their implementations
 builder.Services.AddSingleton<IPaymentsRepository, PaymentsRepository>();
-builder.Services.AddScoped<IPaymentProcessingService, PaymentProcessingService>();
+builder.Services.AddScoped<IPaymentProcessor, PaymentProcessor>();
 
 // Bind configuration
 var acquiringBankApiOptions = builder.Configuration.GetSection("AcquiringBankApi").Get<AcquiringBankApiOptions>() ?? new AcquiringBankApiOptions();
