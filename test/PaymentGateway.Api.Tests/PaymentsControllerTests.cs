@@ -53,7 +53,7 @@ public class PaymentsControllerTests
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
-    private static HttpClient SetupClient(PaymentsRepository paymentsRepository)
+    private static HttpClient SetupClient(IPaymentsRepository paymentsRepository)
     {
         var webApplicationFactory = new WebApplicationFactory<PaymentsController>();
         var client = webApplicationFactory.WithWebHostBuilder(builder =>

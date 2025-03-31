@@ -4,7 +4,7 @@ namespace PaymentGateway.Api.Services;
 
 public class PaymentsRepository : IPaymentsRepository
 {
-    public List<PostPaymentResponse> Payments = new();
+    public List<PostPaymentResponse> Payments = [];
 
     public void Add(PostPaymentResponse payment)
     {
@@ -13,6 +13,6 @@ public class PaymentsRepository : IPaymentsRepository
 
     public PostPaymentResponse? Get(Guid id)
     {
-        return Payments.FirstOrDefault(p => p.Id == id);        
+        return Payments.FirstOrDefault(p => p.Id == id);
     }
 }
