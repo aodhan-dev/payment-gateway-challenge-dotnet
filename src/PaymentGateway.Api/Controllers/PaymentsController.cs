@@ -12,12 +12,12 @@ public class PaymentsController(IPaymentsRepository paymentsRepository) : Contro
     private readonly IPaymentsRepository _paymentsRepository = paymentsRepository;
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<PostPaymentResponse?>> GetPaymentAsync(Guid id)
+    public async Task<ActionResult<PostMerchantPaymentResponse?>> GetPaymentAsync(Guid id)
     {
         var payment = await Task.Run(() => _paymentsRepository.Get(id));
 
         return payment is not null ? 
-            (ActionResult<PostPaymentResponse?>)new OkObjectResult(payment) : 
-            (ActionResult<PostPaymentResponse?>)new NotFoundObjectResult(payment);
+            (ActionResult<PostMerchantPaymentResponse?>)new OkObjectResult(payment) : 
+            (ActionResult<PostMerchantPaymentResponse?>)new NotFoundObjectResult(payment);
     }
 }

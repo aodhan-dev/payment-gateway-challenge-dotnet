@@ -22,8 +22,8 @@ namespace PaymentGateway.Api.Tests
             );
 
             var expectedResponse = new AcquringBankPaymentResponse(
-                Authorised: false,
-                AuthorisationCode: Guid.NewGuid().ToString()
+                Authorized: false,
+                AuthorizationCode: Guid.NewGuid().ToString()
             );
 
             mockAcquiringBankApi
@@ -36,8 +36,8 @@ namespace PaymentGateway.Api.Tests
             var actualResponse = await paymentProcessor.PostAquringBankPaymentAsync(paymentRequest);
 
             // Assert
-            Assert.Equal(expectedResponse.Authorised, actualResponse.Authorised);
-            Assert.Equal(expectedResponse.AuthorisationCode, actualResponse.AuthorisationCode);
+            Assert.Equal(expectedResponse.Authorized, actualResponse.Authorized);
+            Assert.Equal(expectedResponse.AuthorizationCode, actualResponse.AuthorizationCode);
 
             mockAcquiringBankApi.Verify(api => api.PostAcquiringBankPaymentAsync(paymentRequest), Times.Once);
         }

@@ -1,6 +1,6 @@
 ﻿namespace PaymentGateway.Api.Models.Requests;
 
-public class PostMerchantPaymentRequest
+public class MerchantPaymentRequest
 {
     public string CardNumber { get; set; } = default!;
     public int ExpiryMonth { get; set; }

@@ -5,4 +5,5 @@ public record AcquringBankPaymentRequest(
     string ExpiryDate,
     string Currency, 
     int Amount, 
-    int Cvv);
+    int Cvv
+);
