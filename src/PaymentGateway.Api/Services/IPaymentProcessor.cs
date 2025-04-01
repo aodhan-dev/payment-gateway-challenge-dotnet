@@ -1,10 +1,9 @@
 ﻿using PaymentGateway.Api.Models.Requests;
 using PaymentGateway.Api.Models.Responses;
 
-namespace PaymentGateway.Api.Services
+namespace PaymentGateway.Api.Services;
+
+public interface IPaymentsProcessor
 {
-    public interface IPaymentProcessor
-    {
-        Task<AcquringBankPaymentResponse> PostAquringBankPaymentAsync(AcquringBankPaymentRequest paymentRequest);
-    }
+    Task<PostMerchantPaymentResponse> ProcessPaymentAsync(MerchantPaymentRequest paymentRequest);
 }

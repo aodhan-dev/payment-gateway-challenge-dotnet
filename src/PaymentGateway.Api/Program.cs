@@ -1,7 +1,10 @@
 using PaymentGateway.Api.Configuration;
 using PaymentGateway.Api.Services;
 
+using FluentValidation;
 using Refit;
+using PaymentGateway.Api.Models.Requests;
+using PaymentGateway.Api.Services.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +17,8 @@ builder.Services.AddSwaggerGen();
 
 // Register interfaces and their implementations
 builder.Services.AddSingleton<IPaymentsRepository, PaymentsRepository>();
-builder.Services.AddScoped<IPaymentProcessor, PaymentProcessor>();
+builder.Services.AddScoped<IPaymentsProcessor, PaymentsProcessor>();
+builder.Services.AddSingleton<IValidator<MerchantPaymentRequest>, MerchantPaymentRequestValidator>();
 
 // Bind configuration
 var acquiringBankApiOptions = builder.Configuration.GetSection("AcquiringBankApi").Get<AcquiringBankApiOptions>() ?? new AcquiringBankApiOptions();

@@ -1,4 +1,5 @@
-﻿using PaymentGateway.Api.Models.Requests;
+﻿using Microsoft.AspNetCore.Mvc;
+
 using PaymentGateway.Api.Models.Responses;
 
 using Refit;
@@ -7,6 +8,6 @@ namespace PaymentGateway.Api.Services;
 
 public interface IAcquiringBankApi
 {
-    [Post("payments/{paymentRequest}")]
-    Task<AcquringBankPaymentResponse> PostAcquiringBankPaymentAsync(AcquringBankPaymentRequest paymentRequest);
+    [Post("/payments")]
+    Task<AcquiringBankPaymentResponse> PostAcquiringBankPaymentAsync([FromBody]HttpContent paymentRequest);
 }

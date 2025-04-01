@@ -1,6 +1,6 @@
 ﻿namespace PaymentGateway.Api.Models.Requests;
 
-public record AcquringBankPaymentRequest(
+public record AcquiringBankPaymentRequest(
     string CardNumber, 
     string ExpiryDate,
     string Currency, 
