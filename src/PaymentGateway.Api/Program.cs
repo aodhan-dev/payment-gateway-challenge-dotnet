@@ -1,4 +1,10 @@
+using PaymentGateway.Api.Configuration;
 using PaymentGateway.Api.Services;
+
+using FluentValidation;
+using Refit;
+using PaymentGateway.Api.Models.Requests;
+using PaymentGateway.Api.Services.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +15,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<PaymentsRepository>();
+// Register interfaces and their implementations
+builder.Services.AddSingleton<IPaymentsRepository, PaymentsRepository>();
+builder.Services.AddScoped<IPaymentsProcessor, PaymentsProcessor>();
+builder.Services.AddSingleton<IValidator<MerchantPaymentRequest>, MerchantPaymentRequestValidator>();
+
+// Bind configuration
+var acquiringBankApiOptions = builder.Configuration.GetSection("AcquiringBankApi").Get<AcquiringBankApiOptions>() ?? new AcquiringBankApiOptions();
+// Register the Refit client and get BaseUri from appsettings.json
+builder.Services.AddRefitClient<IAcquiringBankApi>()
+        .ConfigureHttpClient(c => c.BaseAddress = new Uri(acquiringBankApiOptions.BaseUri));
 
 var app = builder.Build();
 
