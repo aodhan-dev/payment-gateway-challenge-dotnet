@@ -15,23 +15,23 @@ public class PaymentsController(IPaymentsRepository paymentsRepository, IPayment
     private readonly IPaymentsProcessor _paymentProcessor = paymentProcessor;
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<PostMerchantPaymentResponse?>> GetPaymentAsync(Guid id)
+    public async Task<ActionResult<MerchantPaymentResponse?>> GetPaymentAsync(Guid id)
     {
         var payment = await Task.Run(() => _paymentsRepository.Get(id));
 
         return payment is not null ?
-            (ActionResult<PostMerchantPaymentResponse?>)new OkObjectResult(payment) :
-            (ActionResult<PostMerchantPaymentResponse?>)new NotFoundObjectResult(payment);
+            (ActionResult<MerchantPaymentResponse?>)new OkObjectResult(payment) :
+            (ActionResult<MerchantPaymentResponse?>)new NotFoundObjectResult(payment);
     }
 
     [HttpPost]
-    public async Task<ActionResult<PostMerchantPaymentResponse>> PostPaymentAsync([FromBody] MerchantPaymentRequest paymentRequest)
+    public async Task<ActionResult<MerchantPaymentResponse>> PostPaymentAsync([FromBody] MerchantPaymentRequest paymentRequest)
     {
         var response = await _paymentProcessor.ProcessPaymentAsync(paymentRequest);
 
         return response.Status is PaymentStatus.Rejected
-            ? (ActionResult<PostMerchantPaymentResponse>)new BadRequestObjectResult(response)
-            : (ActionResult<PostMerchantPaymentResponse>)new OkObjectResult(response);
+            ? (ActionResult<MerchantPaymentResponse>)new BadRequestObjectResult(response)
+            : (ActionResult<MerchantPaymentResponse>)new OkObjectResult(response);
     }
 }
 

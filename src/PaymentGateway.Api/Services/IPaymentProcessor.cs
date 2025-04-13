@@ -5,5 +5,5 @@ namespace PaymentGateway.Api.Services;
 
 public interface IPaymentsProcessor
 {
-    Task<PostMerchantPaymentResponse> ProcessPaymentAsync(MerchantPaymentRequest paymentRequest);
+    Task<MerchantPaymentResponse> ProcessPaymentAsync(MerchantPaymentRequest paymentRequest);
 }

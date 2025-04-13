@@ -5,6 +5,6 @@ namespace PaymentGateway.Api.Services;
 
 public interface IPaymentsRepository
 {
-    void Add(PostMerchantPaymentResponse payment);
-    PostMerchantPaymentResponse? Get(Guid id);
+    void Add(MerchantPaymentResponse payment);
+    MerchantPaymentResponse? Get(Guid id);
 }

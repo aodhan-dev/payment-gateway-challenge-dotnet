@@ -59,7 +59,7 @@ public class MerchantPaymentRequestValidator : AbstractValidator<MerchantPayment
 
     private bool BeInCurrencyEnum(string currency)
     {
-        return !string.IsNullOrWhiteSpace(currency) && 
+        return !string.IsNullOrWhiteSpace(currency) &&
             Enum.TryParse(typeof(Currency), currency, true, out _);
     }
 }

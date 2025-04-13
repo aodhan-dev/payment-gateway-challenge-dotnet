@@ -33,7 +33,7 @@ namespace PaymentGateway.Api.Tests
 
             // Act
             var response = await client.GetAsync($"/api/Payments/{payment.Id}");
-            var paymentResponse = await response.Content.ReadFromJsonAsync<PostMerchantPaymentResponse>();
+            var paymentResponse = await response.Content.ReadFromJsonAsync<MerchantPaymentResponse>();
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -71,7 +71,7 @@ namespace PaymentGateway.Api.Tests
 
             // Act
             var response = await client.PostAsJsonAsync("/api/Payments", paymentRequest);
-            var actualResponse = await response.Content.ReadFromJsonAsync<PostMerchantPaymentResponse>();
+            var actualResponse = await response.Content.ReadFromJsonAsync<MerchantPaymentResponse>();
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -97,7 +97,7 @@ namespace PaymentGateway.Api.Tests
 
             // Act
             var response = await client.PostAsJsonAsync("/api/Payments", paymentRequest);
-            var actualResponse = await response.Content.ReadFromJsonAsync<PostMerchantPaymentResponse>();
+            var actualResponse = await response.Content.ReadFromJsonAsync<MerchantPaymentResponse>();
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -123,7 +123,7 @@ namespace PaymentGateway.Api.Tests
 
             // Act
             var response = await client.PostAsJsonAsync("/api/Payments", paymentRequest);
-            var actualResponse = await response.Content.ReadFromJsonAsync<PostMerchantPaymentResponse>();
+            var actualResponse = await response.Content.ReadFromJsonAsync<MerchantPaymentResponse>();
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -143,9 +143,9 @@ namespace PaymentGateway.Api.Tests
             };
         }
 
-        private PostMerchantPaymentResponse CreateValidMerchantPaymentResponse()
+        private MerchantPaymentResponse CreateValidMerchantPaymentResponse()
         {
-            return new PostMerchantPaymentResponse
+            return new MerchantPaymentResponse
             {
                 Id = Guid.NewGuid(),
                 ExpiryYear = _random.Next(2027, 2030),

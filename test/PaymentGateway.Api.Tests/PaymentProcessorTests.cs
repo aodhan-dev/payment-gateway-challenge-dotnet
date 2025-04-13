@@ -14,7 +14,7 @@ namespace PaymentGateway.Api.Tests
         private readonly Mock<IAcquiringBankApi> _mockAcquiringBankApi;
         private readonly Mock<IValidator<MerchantPaymentRequest>> _mockMerchantPaymentRequestValidator;
         private readonly Mock<IPaymentsRepository> _mockPaymentsRepository;
-        private readonly PaymentsProcessor _paymentsProcessor;
+        private readonly PaymentProcessor _paymentsProcessor;
 
         public PaymentsProcessorTests()
         {
@@ -22,9 +22,9 @@ namespace PaymentGateway.Api.Tests
             _mockPaymentsRepository = new Mock<IPaymentsRepository>(MockBehavior.Strict);
             _mockMerchantPaymentRequestValidator = new Mock<IValidator<MerchantPaymentRequest>>(MockBehavior.Strict);
 
-            _paymentsProcessor = new PaymentsProcessor(
+            _paymentsProcessor = new PaymentProcessor(
                 _mockAcquiringBankApi.Object,
-                _mockPaymentsRepository.Object, 
+                _mockPaymentsRepository.Object,
                 _mockMerchantPaymentRequestValidator.Object
             );
         }
@@ -42,9 +42,9 @@ namespace PaymentGateway.Api.Tests
             };
         }
 
-        private static PostMerchantPaymentResponse CreateExpectedResponse(PaymentStatus status)
+        private static MerchantPaymentResponse CreateExpectedResponse(PaymentStatus status)
         {
-            return new PostMerchantPaymentResponse
+            return new MerchantPaymentResponse
             {
                 Id = Guid.NewGuid(),
                 ExpiryYear = 2025,
@@ -78,8 +78,8 @@ namespace PaymentGateway.Api.Tests
             Assert.Equal(expectedResponse.ExpiryYear, actualResponse.ExpiryYear);
 
             _mockMerchantPaymentRequestValidator.Verify(v => v.Validate(It.IsAny<MerchantPaymentRequest>()), Times.Once);
-            _mockAcquiringBankApi.Verify(api => api.PostAcquiringBankPaymentAsync(It.IsAny<HttpContent>()), Times.Once);
-            _mockPaymentsRepository.Verify(repo => repo.Add(It.IsAny<PostMerchantPaymentResponse>()), Times.Once);
+            _mockAcquiringBankApi.Verify(api => api.PostAcquiringBankPaymentAsync(It.IsAny<AcquiringBankPaymentRequest>()), Times.Once);
+            _mockPaymentsRepository.Verify(repo => repo.Add(It.IsAny<MerchantPaymentResponse>()), Times.Once);
         }
 
         [Fact]
@@ -104,8 +104,8 @@ namespace PaymentGateway.Api.Tests
             Assert.Equal(expectedResponse.ExpiryYear, actualResponse.ExpiryYear);
 
             _mockMerchantPaymentRequestValidator.Verify(v => v.Validate(It.IsAny<MerchantPaymentRequest>()), Times.Once);
-            _mockAcquiringBankApi.Verify(api => api.PostAcquiringBankPaymentAsync(It.IsAny<HttpContent>()), Times.Once);
-            _mockPaymentsRepository.Verify(repo => repo.Add(It.IsAny<PostMerchantPaymentResponse>()), Times.Once);
+            _mockAcquiringBankApi.Verify(api => api.PostAcquiringBankPaymentAsync(It.IsAny<AcquiringBankPaymentRequest>()), Times.Once);
+            _mockPaymentsRepository.Verify(repo => repo.Add(It.IsAny<MerchantPaymentResponse>()), Times.Once);
         }
 
         private void SetupMockedMethods(AcquiringBankPaymentResponse acquiringBankPaymentResponse)
@@ -115,11 +115,11 @@ namespace PaymentGateway.Api.Tests
                             .Returns(new FluentValidation.Results.ValidationResult());
 
             _mockAcquiringBankApi
-                .Setup(api => api.PostAcquiringBankPaymentAsync(It.IsAny<HttpContent>()))
+                .Setup(api => api.PostAcquiringBankPaymentAsync(It.IsAny<AcquiringBankPaymentRequest>()))
                 .ReturnsAsync(acquiringBankPaymentResponse);
 
             _mockPaymentsRepository
-                .Setup(repo => repo.Add(It.IsAny<PostMerchantPaymentResponse>()));
+                .Setup(repo => repo.Add(It.IsAny<MerchantPaymentResponse>()));
         }
     }
 }
