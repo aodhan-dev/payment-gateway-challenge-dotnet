@@ -12,8 +12,6 @@ using PaymentGateway.Api.Models.Requests;
 using PaymentGateway.Api.Models.Responses;
 using PaymentGateway.Api.Services;
 
-using Xunit;
-
 namespace PaymentGateway.Api.Tests
 {
     public class PaymentsControllerTests
@@ -178,5 +176,3 @@ namespace PaymentGateway.Api.Tests
         }
     }
 }
-
-
