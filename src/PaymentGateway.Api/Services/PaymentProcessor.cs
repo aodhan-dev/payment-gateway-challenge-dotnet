@@ -81,7 +81,7 @@ public class PaymentProcessor(
             Amount = paymentRequest.Amount,
             CardNumberLastFour = int.Parse(paymentRequest.CardNumber[^4..]),
             Currency = paymentRequest.Currency,
-            Status = acquiringBankPaymentResponse.IsAuthorized ? PaymentStatus.Authorized : PaymentStatus.Declined
+            Status = acquiringBankPaymentResponse.Authorized ? PaymentStatus.Authorized : PaymentStatus.Declined
         };
     }
 }

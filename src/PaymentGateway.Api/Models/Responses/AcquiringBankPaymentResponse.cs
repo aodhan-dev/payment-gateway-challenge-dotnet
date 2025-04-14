@@ -1,6 +1,6 @@
 ﻿namespace PaymentGateway.Api.Models.Responses;
 
 public record AcquiringBankPaymentResponse(
-    bool IsAuthorized,
+    bool Authorized,
     string AuthorizationCode
 );
